@@ -41,7 +41,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($clients as $client)
+                    @forelse ($clients as $client)
                         <tr>
                             <td class="py-2 px-4 border-b text-center">{{ $client->first_name }}</td>
                             <td class="py-2 px-4 border-b text-center">{{ $client->last_name }}</td>
@@ -66,7 +66,13 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="7" class="py-2 px-4 text-center border-b">
+                                    No clients found.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
