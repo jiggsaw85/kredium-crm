@@ -61,4 +61,5 @@ class CashLoanController extends Controller
 
         return back()->with('success', 'Cash loan updated successfully!');
     }
+
 }

@@ -16,14 +16,12 @@
                     </a>
                 </div>
 
-                <!-- Success Message -->
                 @if (session('success'))
                     <div class="p-4 mb-4 text-green-700 bg-green-100 rounded">
                         {{ session('success') }}
                     </div>
                 @endif
 
-                <!-- Error Message -->
                 @if (session('error'))
                     <div class="p-4 mb-4 text-red-700 bg-red-100 rounded">
                         {{ session('error') }}
@@ -45,13 +43,13 @@
                     <tbody>
                     @foreach ($clients as $client)
                         <tr>
-                            <td class="py-2 px-4 border-b">{{ $client->first_name }}</td>
-                            <td class="py-2 px-4 border-b">{{ $client->last_name }}</td>
-                            <td class="py-2 px-4 border-b">{{ $client->email }}</td>
-                            <td class="py-2 px-4 border-b">{{ $client->phone }}</td>
-                            <td class="py-2 px-4 border-b">{{ $client->cash_loan ? 'Yes' : 'No' }}</td>
-                            <td class="py-2 px-4 border-b">{{ $client->home_loan ? 'Yes' : 'No' }}</td>
-                            <td class="py-2 px-4 border-b">
+                            <td class="py-2 px-4 border-b text-center">{{ $client->first_name }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ $client->last_name }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ $client->email }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ $client->phone }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ $client->cash_loan ? 'Yes' : 'No' }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ $client->home_loan ? 'Yes' : 'No' }}</td>
+                            <td class="py-2 px-4 border-b text-center">
                                 <a href="{{ route('clients.edit', $client->id) }}"
                                    class="inline-block px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
                                     Edit

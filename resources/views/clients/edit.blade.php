@@ -103,13 +103,16 @@
                         <div class="mb-4">
                             <label for="amount" class="block text-sm font-medium text-gray-700">Loan Amount</label>
                             <input type="number" name="amount" id="amount" value="{{ $cashLoan->loanable->amount ?? '' }}"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                {{ $cashLoan && $cashLoan->user_id !== Auth::id() ? 'disabled' : '' }}>
                         </div>
 
-                        <button type="submit"
-                                class="px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600">
-                            {{ $cashLoan ? 'Update Cash Loan' : 'Add Cash Loan' }}
-                        </button>
+                        @if (!$cashLoan || $cashLoan->user_id === Auth::id())
+                            <button type="submit"
+                                    class="px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600">
+                                {{ $cashLoan ? 'Update Cash Loan' : 'Add Cash Loan' }}
+                            </button>
+                        @endif
                     </form>
                 @endif
 
@@ -131,21 +134,24 @@
                         <div class="mb-4">
                             <label for="property_value" class="block text-sm font-medium text-gray-700">Property Value</label>
                             <input type="number" name="property_value" id="property_value" value="{{ $homeLoan->loanable->property_value ?? '' }}"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                {{ $homeLoan && $homeLoan->user_id !== Auth::id() ? 'disabled' : '' }}>
                         </div>
                         <div class="mb-4">
                             <label for="down_payment" class="block text-sm font-medium text-gray-700">Down Payment</label>
                             <input type="number" name="down_payment" id="down_payment" value="{{ $homeLoan->loanable->down_payment ?? '' }}"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                {{ $homeLoan && $homeLoan->user_id !== Auth::id() ? 'disabled' : '' }}>
                         </div>
 
-                        <button type="submit"
-                                class="px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600">
-                            {{ $homeLoan ? 'Update Home Loan' : 'Add Home Loan' }}
-                        </button>
+                        @if (!$homeLoan || $homeLoan->user_id === Auth::id())
+                            <button type="submit"
+                                    class="px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600">
+                                {{ $homeLoan ? 'Update Home Loan' : 'Add Home Loan' }}
+                            </button>
+                        @endif
                     </form>
                 @endif
-
             </div>
         </div>
     </div>

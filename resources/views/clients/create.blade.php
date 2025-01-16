@@ -9,7 +9,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="p-6 bg-white rounded shadow">
 
-                <!-- Error Messages -->
                 @if ($errors->any())
                     <div class="p-4 mb-4 text-red-700 bg-red-100 rounded">
                         <ul>
@@ -22,7 +21,6 @@
 
                 <h1 class="text-2xl font-bold mb-4">Add New Client</h1>
 
-                <!-- Add Client Form -->
                 <form action="{{ route('clients.store') }}" method="POST">
                     @csrf
 

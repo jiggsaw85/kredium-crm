@@ -4,6 +4,7 @@ use App\Http\Controllers\CashLoanController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HomeLoanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,10 +14,6 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/report', function () {
-    return view('report');
-})->middleware('auth')->name('report');
 
 Route::middleware('auth')->group(function () {
     // Profile
@@ -37,6 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/home-loans', [HomeLoanController::class, 'store'])->name('home_loans.store');
     Route::put('/cash-loans/{id}', [CashLoanController::class, 'update'])->name('cash_loans.update');
     Route::put('/home-loans/{id}', [HomeLoanController::class, 'update'])->name('home_loans.update');
+
+    // Reports
+    Route::get('/report', [ReportController::class, 'index'])->name('report.index');
 });
 
 require __DIR__.'/auth.php';
