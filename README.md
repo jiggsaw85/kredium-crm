@@ -12,6 +12,16 @@ Install Laravel
 cd kredium-crm && composer install
 ```
 
+Install node packages
+```
+npm install
+```
+
+Build the assets
+```
+npm run build
+```
+
 Set environment file
 ```
 cp .env.example .env
