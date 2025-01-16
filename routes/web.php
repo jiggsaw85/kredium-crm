@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
 
     // Reports
     Route::get('/report', [ReportController::class, 'index'])->name('report.index');
+    Route::get('/report/export-csv', [ReportController::class, 'exportCsv'])->name('report.export.csv');
 });
 
 require __DIR__.'/auth.php';

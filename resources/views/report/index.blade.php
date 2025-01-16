@@ -46,6 +46,13 @@
                     @endforelse
                     </tbody>
                 </table>
+
+                <div class="mt-4 text-right">
+                    <a href="{{ route('report.export.csv') }}"
+                       class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600">
+                        Export to CSV
+                    </a>
+                </div>
             </div>
         </div>
     </div>
