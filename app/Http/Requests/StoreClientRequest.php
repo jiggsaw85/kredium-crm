@@ -15,7 +15,7 @@ class StoreClientRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * @return string[]
      */
     public function rules(): array
     {
@@ -31,7 +31,7 @@ class StoreClientRequest extends FormRequest
     }
 
     /**
-     * Get the custom validation messages for the rules.
+     * @return string[]
      */
     public function messages(): array
     {
@@ -41,7 +41,7 @@ class StoreClientRequest extends FormRequest
     }
 
     /**
-     * Prepare the data for validation.
+     * @return void
      */
     protected function prepareForValidation()
     {

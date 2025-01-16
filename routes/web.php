@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CashLoanController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\HomeLoanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +31,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/clients/{client}/edit', [ClientController::class, 'edit'])->name('clients.edit');
     Route::put('/clients/{client}/update', [ClientController::class, 'update'])->name('clients.update');
     Route::delete('/clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
+
+    // Loans
+    Route::post('/cash-loans', [CashLoanController::class, 'store'])->name('cash_loans.store');
+    Route::post('/home-loans', [HomeLoanController::class, 'store'])->name('home_loans.store');
+    Route::put('/cash-loans/{id}', [CashLoanController::class, 'update'])->name('cash_loans.update');
+    Route::put('/home-loans/{id}', [HomeLoanController::class, 'update'])->name('home_loans.update');
 });
 
 require __DIR__.'/auth.php';

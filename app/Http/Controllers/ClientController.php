@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\LoanType;
 use App\Http\Requests\StoreClientRequest;
 use App\Models\Client;
 use App\Services\ClientService;
+use App\Services\LoanService;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ClientController extends Controller
 {
     protected $clientService;
+    protected $loanService;
 
-    public function __construct(ClientService $clientService)
+    public function __construct(ClientService $clientService, LoanService $loanService)
     {
         $this->clientService = $clientService;
+        $this->loanService = $loanService;
     }
 
     /**
@@ -76,7 +80,18 @@ class ClientController extends Controller
     public function update(StoreClientRequest $request, Client $client): RedirectResponse
     {
         try {
-            $this->clientService->updateClient($client, $request->validated());
+            $validatedData = $request->validated();
+
+            if ($client->cash_loan && !$validatedData['cash_loan']) {
+                $this->loanService->deleteLoan($client, LoanType::CASH_LOAN);
+            }
+
+            if ($client->home_loan && !$validatedData['home_loan']) {
+                $this->loanService->deleteLoan($client, LoanType::HOME_LOAN);
+            }
+
+            $this->clientService->updateClient($client, $validatedData);
+
             return redirect()->route('clients.edit', $client->id)->with('success', 'Client updated successfully!');
         } catch (\Exception $e) {
             \Log::error('Error updating client: ' . $e->getMessage(), [

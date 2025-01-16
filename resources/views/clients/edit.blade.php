@@ -59,8 +59,8 @@
                         <label for="cash_loan" class="block text-sm font-medium text-gray-700">Cash Loan</label>
                         <select name="cash_loan" id="cash_loan"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                            <option value="0" {{ $client->cash_loan == 0 ? 'selected' : '' }}>No</option>
-                            <option value="1" {{ $client->cash_loan == 1 ? 'selected' : '' }}>Yes</option>
+                            <option value="0" {{ $client->cash_loan === 0 ? 'selected' : '' }}>No</option>
+                            <option value="1" {{ $client->cash_loan === 1 ? 'selected' : '' }}>Yes</option>
                         </select>
                     </div>
 
@@ -68,8 +68,8 @@
                         <label for="home_loan" class="block text-sm font-medium text-gray-700">Home Loan</label>
                         <select name="home_loan" id="home_loan"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                            <option value="0" {{ $client->home_loan == 0 ? 'selected' : '' }}>No</option>
-                            <option value="1" {{ $client->home_loan == 1 ? 'selected' : '' }}>Yes</option>
+                            <option value="0" {{ $client->home_loan === 0 ? 'selected' : '' }}>No</option>
+                            <option value="1" {{ $client->home_loan === 1 ? 'selected' : '' }}>Yes</option>
                         </select>
                     </div>
 
@@ -84,6 +84,68 @@
                         </a>
                     </div>
                 </form>
+
+                <!-- Cash Loan Form -->
+                @if ($client->cash_loan)
+                    @php
+                        // Check if a cash loan exists for the client
+                        $cashLoan = $client->loans->where('loanable_type', \App\Models\CashLoan::class)->first();
+                    @endphp
+
+                    <h2 class="text-xl font-bold mt-8 mb-4">Cash Loan</h2>
+                    <form action="{{ $cashLoan ? route('cash_loans.update', $cashLoan->loanable_id) : route('cash_loans.store') }}" method="POST">
+                        @csrf
+                        @if ($cashLoan)
+                            @method('PUT') <!-- Use PUT for updates -->
+                        @endif
+                        <input type="hidden" name="client_id" value="{{ $client->id }}">
+
+                        <div class="mb-4">
+                            <label for="amount" class="block text-sm font-medium text-gray-700">Loan Amount</label>
+                            <input type="number" name="amount" id="amount" value="{{ $cashLoan->loanable->amount ?? '' }}"
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+
+                        <button type="submit"
+                                class="px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600">
+                            {{ $cashLoan ? 'Update Cash Loan' : 'Add Cash Loan' }}
+                        </button>
+                    </form>
+                @endif
+
+                <!-- Home Loan Form -->
+                @if ($client->home_loan)
+                    @php
+                        // Check if a home loan exists for the client
+                        $homeLoan = $client->loans->where('loanable_type', \App\Models\HomeLoan::class)->first();
+                    @endphp
+
+                    <h2 class="text-xl font-bold mt-8 mb-4">Home Loan</h2>
+                    <form action="{{ $homeLoan ? route('home_loans.update', $homeLoan->loanable_id) : route('home_loans.store') }}" method="POST">
+                        @csrf
+                        @if ($homeLoan)
+                            @method('PUT') <!-- Use PUT for updates -->
+                        @endif
+                        <input type="hidden" name="client_id" value="{{ $client->id }}">
+
+                        <div class="mb-4">
+                            <label for="property_value" class="block text-sm font-medium text-gray-700">Property Value</label>
+                            <input type="number" name="property_value" id="property_value" value="{{ $homeLoan->loanable->property_value ?? '' }}"
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="mb-4">
+                            <label for="down_payment" class="block text-sm font-medium text-gray-700">Down Payment</label>
+                            <input type="number" name="down_payment" id="down_payment" value="{{ $homeLoan->loanable->down_payment ?? '' }}"
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+
+                        <button type="submit"
+                                class="px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600">
+                            {{ $homeLoan ? 'Update Home Loan' : 'Add Home Loan' }}
+                        </button>
+                    </form>
+                @endif
+
             </div>
         </div>
     </div>
